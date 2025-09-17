@@ -6,9 +6,9 @@ import pandas as pd
 from config import Settings
 
 def connect_to_db():
-    # Establishes a connection to the SQLite database.
+    """Establishes a connection to the SQLite database."""
     try:
-        conn = sqlite3.connect(Settings.DB_FILE)
+        conn = sqlite3.connect(Settings.DB_FULLPATH)
         print("✅ Successfully connected to the database.")
         return conn
     except sqlite3.Error as e:
@@ -16,9 +16,13 @@ def connect_to_db():
         return None
 
 def read_transactions(conn):
-    # Reads all stock transactions from the database.
+    """
+    Reads all stock transactions from the database using the column names 
+    defined in the Settings class.
+    """
     try:
-        query = f"SELECT * FROM {Settings.TRANSACTIONS_TABLE} ORDER BY symbol, date, type"
+        # Use column names from the Settings class
+        query = f"SELECT `{Settings.TICKER_COL}`, `{Settings.DATE_COL}`, `{Settings.QUANTITY_COL}`, `{Settings.PRICE_COL}`, `{Settings.FX_COL}` FROM {Settings.TRANSACTIONS_TABLE} ORDER BY `{Settings.TICKER_COL}`, `{Settings.DATE_COL}`"
         df = pd.read_sql_query(query, conn)
         print(f"✅ Successfully read {len(df)} transactions.")
         return df
@@ -27,21 +31,18 @@ def read_transactions(conn):
         return pd.DataFrame()
 
 def write_pnl_data(conn, realized_df, unrealized_df):
-    # Writes the realized and unrealized P&L data back to the database.
+    """Writes the realized and unrealized P&L data back to the database."""
     try:
-        # Write realized P&L data
         if not realized_df.empty:
             realized_df.to_sql(Settings.REALIZED_PNL_TABLE, conn, if_exists='replace', index=False)
             print(f"✅ Successfully wrote {len(realized_df)} rows to {Settings.REALIZED_PNL_TABLE}.")
         else:
             print(f"ℹ️ No realized P&L data to write.")
 
-        # Write unrealized P&L data
         if not unrealized_df.empty:
             unrealized_df.to_sql(Settings.UNREALIZED_PNL_TABLE, conn, if_exists='replace', index=False)
             print(f"✅ Successfully wrote {len(unrealized_df)} rows to {Settings.UNREALIZED_PNL_TABLE}.")
         else:
             print(f"ℹ️ No unrealized P&L data to write.")
-            
     except sqlite3.Error as e:
         print(f"❌ Error writing to database: {e}")
