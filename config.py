@@ -26,3 +26,16 @@ class Settings:
     PRICE_COL = 'transacted_price'
     DATE_COL = 'transaction_date' # Assuming this column contains a date/datetime value
     FX_COL = 'fx'
+
+    # Current stock price table and columns
+    STOCK_DATA_TABLE = 'stock_data'
+    TICKER_COL_STOCK_DATA = 'ticker_base'
+    PRICE_COL_STOCK_DATA = 'last_price'
+
+    # FX rate table and columns
+    FX_DATA_TABLE = 'fx_data'
+    CCY_COL_FX = 'CCY1'
+    RATE_COL_FX = 'rate'
+    
+    # Transaction table currency column
+    CCY_COL_TRANS = 'ccy'
