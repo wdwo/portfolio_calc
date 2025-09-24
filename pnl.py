@@ -73,26 +73,30 @@ def calculate_pnl_fifo(transactions: pd.DataFrame, latest_prices: dict, current_
     # Calculate unrealized P&L from remaining positions
     unrealized_pnl_data = []
     for ticker, positions in unrealized_positions.items():
-        if ticker in latest_prices and ticker in ticker_to_ccy:
-            currency = ticker_to_ccy[ticker]
-            if currency in current_fx_rates:
-                current_market_price = latest_prices[ticker]
-                current_fx_rate = current_fx_rates[currency]
-                for pos in positions:
-                    # Unrealized gain now factors in both latest price and current FX rate
-                    unrealized_gain = (current_market_price * current_fx_rate - pos['cost_basis_per_share']) * pos['quantity']
-                    unrealized_pnl_data.append({
-                        'symbol': ticker,
-                        'quantity': pos['quantity'],
-                        'cost_basis_per_share': pos['cost_basis_per_share'],
-                        'current_market_price': current_market_price,
-                        'current_fx_rate': current_fx_rate,
-                        'unrealized_gain': unrealized_gain
-                    })
+        # Check if there's any remaining quantity for the ticker
+        total_remaining_quantity = sum(pos['quantity'] for pos in positions)
+        # Only proceed if the total remaining quantity is positive
+        if total_remaining_quantity > 0:
+            if ticker in latest_prices and ticker in ticker_to_ccy:
+                currency = ticker_to_ccy[ticker]
+                if currency in current_fx_rates:
+                    current_market_price = latest_prices[ticker]
+                    current_fx_rate = current_fx_rates[currency]
+                    for pos in positions:
+                        # Unrealized gain now factors in both latest price and current FX rate
+                        unrealized_gain = (current_market_price * current_fx_rate - pos['cost_basis_per_share']) * pos['quantity']
+                        unrealized_pnl_data.append({
+                            'symbol': ticker,
+                            'quantity': pos['quantity'],
+                            'cost_basis_per_share': pos['cost_basis_per_share'],
+                            'current_market_price': current_market_price,
+                            'current_fx_rate': current_fx_rate,
+                            'unrealized_gain': unrealized_gain
+                        })
+                else:
+                    print(f"⚠️ Warning: No current FX rate found for currency '{currency}'. Skipping unrealized P&L for {ticker}.")
             else:
-                print(f"⚠️ Warning: No current FX rate found for currency '{currency}'. Skipping unrealized P&L for {ticker}.")
-        else:
-            print(f"⚠️ Warning: No latest price or currency found for {ticker}. Skipping unrealized P&L calculation for this position.")
+                print(f"⚠️ Warning: No latest price or currency found for {ticker}. Skipping unrealized P&L calculation for this position.")
             
     return pd.DataFrame(realized_pnl), pd.DataFrame(unrealized_pnl_data)
 
