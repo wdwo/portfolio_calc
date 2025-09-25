@@ -8,7 +8,7 @@ project_root = current_dir
 
 class Settings:
     # Define Paths from environment variables or defaults
-    DB_PATH = os.getenv('DB_PATH', project_root / 'db')
+    DB_PATH = Path(os.getenv('DB_PATH', '/db'))
 
     # Database 
     DB_TYPE = os.getenv('DB_TYPE', 'sqlite')

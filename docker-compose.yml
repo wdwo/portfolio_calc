@@ -1,0 +1,30 @@
+services:
+  portfolio_calc:
+    build: .
+    container_name: portfolio_calc
+    volumes:
+      - /mnt/data/db:/db
+    environment:
+      DB_PATH: /db
+      DB_TYPE: sqlite
+      DB_FILENAME: dwo.db
+      TRANSACTIONS_TABLE: equity_transactions
+      REALIZED_PNL_TABLE: realized_pnl
+      UNREALIZED_PNL_TABLE: unrealized_pnl
+      TICKER_COL: ticker
+      QUANTITY_COL: quantity
+      PRICE_COL: transacted_price
+      DATE_COL: transaction_date
+      FX_COL: fx
+      STOCK_DATA_TABLE: stock_data
+      TICKER_COL_STOCK_DATA: ticker_base
+      PRICE_COL_STOCK_DATA: last_price
+      FX_DATA_TABLE: fx_data
+      CCY_COL_FX: CCY1
+    restart: unless-stopped 
+    networks:
+      - dwolab
+
+networks:
+  dwolab:
+    external: true
