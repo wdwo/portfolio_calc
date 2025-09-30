@@ -21,7 +21,7 @@ services:
       PRICE_COL_STOCK_DATA: last_price
       FX_DATA_TABLE: fx_data
       CCY_COL_FX: CCY1
-    restart: unless-stopped 
+
     networks:
       - dwolab
 
