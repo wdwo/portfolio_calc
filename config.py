@@ -8,13 +8,7 @@ project_root = current_dir
 
 class Settings:
     # Define Paths from environment variables or defaults
-    # DB_PATH = Path(os.getenv('DB_PATH', '/db'))
 
-    # Database 
-    # DB_TYPE = os.getenv('DB_TYPE', 'sqlite')
-    # DB_FILENAME = os.getenv('DB_FILENAME', 'dwo.db')
-    # DB_FULLPATH = DB_PATH / DB_FILENAME
-    # DB postgres 
     DB_HOST = os.getenv('DB_HOST', 'postgres')
     DB_PORT = os.getenv('DB_PORT', '5432')
     DB_USER = os.getenv('DB_USER', 'dwoadmin')
