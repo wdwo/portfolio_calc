@@ -5,9 +5,11 @@ services:
     volumes:
       - /mnt/data/db:/db
     environment:
-      DB_PATH: /db
-      DB_TYPE: sqlite
-      DB_FILENAME: dwo.db
+      DB_HOST: postgres
+      DB_PORT: '5432'
+      DB_USER: dwoadmin
+      DB_PASSWORD: dwoxxx7578
+      DB_NAME: dwo
       TRANSACTIONS_TABLE: equity_transactions
       REALIZED_PNL_TABLE: realized_pnl
       UNREALIZED_PNL_TABLE: unrealized_pnl
@@ -20,7 +22,7 @@ services:
       TICKER_COL_STOCK_DATA: ticker_base
       PRICE_COL_STOCK_DATA: last_price
       FX_DATA_TABLE: fx_data
-      CCY_COL_FX: CCY1
+      CCY_COL_FX: ccy1
 
     networks:
       - dwolab

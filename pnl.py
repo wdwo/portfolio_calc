@@ -120,7 +120,7 @@ def main():
         write_pnl_data(conn, realized_df, unrealized_df)
 
     finally:
-        conn.close()
+        # conn.close()
         print("✅ Database connection closed.")
 
 if __name__ == "__main__":

@@ -8,12 +8,19 @@ project_root = current_dir
 
 class Settings:
     # Define Paths from environment variables or defaults
-    DB_PATH = Path(os.getenv('DB_PATH', '/db'))
+    # DB_PATH = Path(os.getenv('DB_PATH', '/db'))
 
     # Database 
-    DB_TYPE = os.getenv('DB_TYPE', 'sqlite')
-    DB_FILENAME = os.getenv('DB_FILENAME', 'dwo.db')
-    DB_FULLPATH = DB_PATH / DB_FILENAME
+    # DB_TYPE = os.getenv('DB_TYPE', 'sqlite')
+    # DB_FILENAME = os.getenv('DB_FILENAME', 'dwo.db')
+    # DB_FULLPATH = DB_PATH / DB_FILENAME
+    # DB postgres 
+    DB_HOST = os.getenv('DB_HOST', 'postgres')
+    DB_PORT = os.getenv('DB_PORT', '5432')
+    DB_USER = os.getenv('DB_USER', 'dwoadmin')
+    DB_PASSWORD= os.getenv('DB_PASSWORD', '')
+    DB_NAME = os.getenv('DB_NAME', 'dwo')
+
 
     # Table names
     TRANSACTIONS_TABLE = os.getenv('EQUITY_TRANSACTIONS_TABLE','equity_transactions')
@@ -34,7 +41,7 @@ class Settings:
 
     # FX rate table and columns
     FX_DATA_TABLE = os.getenv('FX_DATA_TABLE','fx_data')
-    CCY_COL_FX = os.getenv('CCY_COL_FX','CCY1')
+    CCY_COL_FX = os.getenv('CCY_COL_FX','ccy1')
     RATE_COL_FX = os.getenv('RATE_COL_FX','rate')
     
     # Transaction table currency column
