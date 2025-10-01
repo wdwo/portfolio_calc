@@ -1,20 +1,13 @@
 # Configuration file 
 import os
-from pathlib import Path
-
-# Get the current script's directory and project root
-current_dir = Path(__file__).parent
-project_root = current_dir
 
 class Settings:
-    # Define Paths from environment variables or defaults
-
+    # DB connection 
     DB_HOST = os.getenv('DB_HOST', 'postgres')
     DB_PORT = os.getenv('DB_PORT', '5432')
     DB_USER = os.getenv('DB_USER', 'dwoadmin')
     DB_PASSWORD= os.getenv('DB_PASSWORD', '')
     DB_NAME = os.getenv('DB_NAME', 'dwo')
-
 
     # Table names
     TRANSACTIONS_TABLE = os.getenv('EQUITY_TRANSACTIONS_TABLE','equity_transactions')

@@ -5,7 +5,7 @@ import pandas as pd
 from sqlalchemy import create_engine, text
 from config import Settings
 
-# Example: "postgresql+psycopg2://user:password@localhost:5432/mydb"
+# Construct db URL
 DB_URL = f"postgresql+psycopg2://{Settings.DB_USER}:{Settings.DB_PASSWORD}@{Settings.DB_HOST}:{Settings.DB_PORT}/{Settings.DB_NAME}"
 
 def connect_to_db():
