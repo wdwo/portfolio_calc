@@ -2,8 +2,6 @@ services:
   portfolio_calc:
     build: .
     container_name: portfolio_calc
-    volumes:
-      - /mnt/data/db:/db
     environment:
       DB_HOST: postgres
       DB_PORT: 5432
