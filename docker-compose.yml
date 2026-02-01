@@ -3,7 +3,7 @@ services:
     build: .
     container_name: portfolio_calc
     environment:
-      DB_HOST: postgres
+      DB_HOST: 192.168.88.102
       DB_PORT: 5432
       DB_USER: dwo
       DB_PASSWORD: dwoxxx7578
